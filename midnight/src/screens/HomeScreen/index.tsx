@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, Button, StyleSheet, ViewStyle } from 'react-native';
+// containing Screen and Navigator (Navigator contain Screen as children to define for routes)ss
 import { StackNavigationProp } from '@react-navigation/stack';
 
 type RootStacks = {

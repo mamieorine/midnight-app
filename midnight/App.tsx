@@ -12,8 +12,6 @@ type IconState = {
   Inactive: string;
 };
 
-const Tab = createBottomTabNavigator();
-
 const icons = {
   iconHome: {
     active: 'ios-information-circle',
@@ -28,36 +26,38 @@ const icons = {
 const iconHome: IconState = icons.iconHome;
 const iconDashboard: IconState = icons.iconDashboard;
 
-function App() {
-  return (
-    <NavigationContainer>
-      <Tab.Navigator 
-        initialRouteName="Home"
-        tabBarOptions={{
-          activeTintColor: 'brown',
-          inactiveTintColor: 'gray'
-        }}
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size}) => {
-            let iconName;
+const Tab = createBottomTabNavigator();
 
-            if (route.name === 'Home') {
-              iconName = focused ? iconHome.active : iconHome.Inactive;
-            } 
-            else if (route.name === 'Dashboard') {
-              iconName = focused ? iconDashboard.active : iconDashboard.Inactive;
+export default class midnightApp extends React.Component {
+  render() {
+    return (
+      <NavigationContainer>
+        <Tab.Navigator 
+          initialRouteName="Home"
+          tabBarOptions={{
+            activeTintColor: 'brown',
+            inactiveTintColor: 'gray'
+          }}
+          screenOptions={({ route }) => ({
+            tabBarIcon: ({ focused, color, size}) => {
+              let iconName;
+
+              if (route.name === 'Home') {
+                iconName = focused ? iconHome.active : iconHome.Inactive;
+              } 
+              else if (route.name === 'Dashboard') {
+                iconName = focused ? iconDashboard.active : iconDashboard.Inactive;
+              }
+
+              // You can return any component that you like here!
+              return <Ionicons name={iconName} size={size} color={color} />;
             }
+          })}>
 
-            // You can return any component that you like here!
-            return <Ionicons name={iconName} size={size} color={color} />;
-          }
-        })}>
-
-        <Tab.Screen name="Home" component={HomeScreen} options={{ title: 'HOME' }} />
-        <Tab.Screen name="Dashboard" component={DashboardScreen} />
-      </Tab.Navigator>
-    </NavigationContainer>
-  )
+          <Tab.Screen name="Home" component={HomeScreen} options={{ title: 'HOME' }} />
+          <Tab.Screen name="Dashboard" component={DashboardScreen} />
+        </Tab.Navigator>
+      </NavigationContainer>
+    )
+  }
 }
-
-export default App;
