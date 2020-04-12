@@ -1,7 +1,9 @@
 import React from 'react';
 import { View, Text, Button, StyleSheet, ViewStyle } from 'react-native';
-// containing Screen and Navigator (Navigator contain Screen as children to define for routes)ss
 import { StackNavigationProp } from '@react-navigation/stack';
+import TogglerTabs from '../../components/ToggleTabs';
+import { Theme } from 'react-native-paper';
+import { theme } from '../../components/theme';
 
 type RootStacks = {
   Dashboard: undefined;
@@ -9,6 +11,7 @@ type RootStacks = {
 
 interface Props {
   navigation: StackNavigationProp<RootStacks>;
+  theme: Theme;
 }
 
 interface Styles {
@@ -23,8 +26,7 @@ export default class HomeScreen extends React.Component<Props> {
   render() {
     return (
       <View style={styles.containerHome}>
-        <Text>This is Home Screen na ja</Text>
-        <Button title="Go to dashboard" onPress={() => this.props.navigation.navigate('Dashboard')}/>
+        <TogglerTabs />
       </View>
     )
   }
@@ -33,8 +35,8 @@ export default class HomeScreen extends React.Component<Props> {
 const styles = StyleSheet.create<Styles>({
   containerHome: {
       flex: 1,
-      backgroundColor: 'tomato',
+      padding: 15,
       alignItems: 'center',
-      justifyContent: 'center',
+      backgroundColor: theme.colors.background,
   },
 })
