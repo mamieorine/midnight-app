@@ -17,7 +17,7 @@ export default class Header extends React.Component {
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: darkTheme.colors.backgroundPrimary
+    backgroundColor: theme.colors.backgroundPrimary
   },
 
   logo: {

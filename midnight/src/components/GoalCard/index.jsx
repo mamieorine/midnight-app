@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button, Text } from 'react-native-paper';
-import { darkTheme } from '../theme';
+import { theme } from '../theme';
 
 export default class toggleTabs extends React.Component {
   render() {
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   goalCard: {
     flex: 0,
     flexDirection: 'row',
-    backgroundColor: darkTheme.colors.accent,
+    backgroundColor: theme.colors.accent,
     alignItems: 'center',
     justifyContent: 'center',
     padding: 5,
