@@ -1,12 +1,11 @@
-//import 'react-native-gesture-handler'; // built-in touch system. if didn't import it, app may crash in production.
 import React from 'react';
-// manages navigation tree and navigation state.
 import { NavigationContainer } from '@react-navigation/native'; 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import HomeScreen from './src/screens/HomeScreen';
 import DashboardScreen from './src/screens/DashboardScreen';
 import Header from './src/components/Header';
+import firebase from 'firebase';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { theme } from './src/components/theme';
 
@@ -30,9 +29,24 @@ const iconHome: IconState = icons.iconHome;
 const iconDashboard: IconState = icons.iconDashboard;
 
 const Tab = createBottomTabNavigator();
+const firebaseConfig = {
+  apiKey: "AIzaSyBfXHc-7JrGqCQzU--5osLMXfGlFrmKeT0",
+  authDomain: "midnightapp-39a77.firebaseapp.com",
+  databaseURL: "https://midnightapp-39a77.firebaseio.com",
+  projectId: "midnightapp-39a77",
+  storageBucket: "midnightapp-39a77.appspot.com",
+  messagingSenderId: "296948390183",
+  appId: "1:296948390183:web:bf64e426572a96bd66b102",
+  measurementId: "G-56342W5QPL"
+};
 
 export default class midnightApp extends React.Component {
   render() {
+    //initailize firebase
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+
     return (
       <PaperProvider theme={theme}>
         <Header />

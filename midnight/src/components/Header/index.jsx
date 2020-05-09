@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Appbar } from 'react-native-paper';
-import { theme } from '../../components/theme';
+import { theme } from '../theme';
 
 export default class Header extends React.Component {
   render() {
