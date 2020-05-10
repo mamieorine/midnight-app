@@ -1,68 +1,61 @@
 import React from 'react';
-import styled from 'styled-components/native';
-import { View, StyleSheet, ViewStyle } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import ToggleTabs from '../../components/ToggleTabs';
-import GoalCard from '../../components/GoalCard';
 import firebase from 'firebase';
-import { Theme } from 'react-native-paper';
+import styled from 'styled-components/native';
+import * as goalCard from '../../components/GoalCard';
+import GoalCard from '../../components/GoalCard';
+import ToggleTabs from '../../components/ToggleTabs';
 import { theme } from '../../components/theme';
 
-type RootStacks = {
-  Dashboard: undefined;
-};
+interface State {
+  goals: goalCard.GoalProps[];
+}
 
 interface Props {
-  navigation: StackNavigationProp<RootStacks>;
-  theme: Theme;
+  navigation: any
 }
 
-interface Styles {
-  containerHome: ViewStyle;
-}
-
-let username: any;
-
-export default class HomeScreen extends React.Component<Props> {
+export default class HomeScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
+
+    const database = firebase.database();
+    const goal = database.ref('/goals/');
+  
+    goal.on('value', (result: any) => {
+      this.state = {
+        goals: result.val()
+      }
+    });
   }
 
   render() {
-    var db = firebase.database();
-    var ref = db.ref("/goals/");
-
-    ref.on("value", function(snapshot: any) {
-      console.log(snapshot.val());
-    }, function (errorObject: any) {
-      console.log("The read failed: " + errorObject.code);
-    });
+    const goalCard = this.state.goals.map((value: goalCard.GoalProps, index: number) => {
+      return <GoalCard key={`${index}-${value.title}`} goal={value} />
+    })
 
     return (
-      <View style={styles.containerHome}>
+      <ContainerHome>
         <ToggleTabs />
-        <Text>{username}</Text>
-        
-        <GoalCard/>
-        <GoalCard />
-        <GoalCard />
-        <GoalCard />
-      </View>
+        {goalCard}
+
+        <AddGoal title="+" onPress={() =>
+          this.props.navigation.navigate('AddGoalScreen', { name: 'Jane' })
+        } />
+      </ContainerHome>
     )
   }
 }
 
-const styles = StyleSheet.create<Styles>({
-  containerHome: {
-      flex: 1,
-      padding: 15,
-      alignItems: 'center',
-      backgroundColor: theme.colors.background,
-  },
-})
+const ContainerHome = styled.View`
+  flex: 1;
+  padding: 15px;
+  alignItems: center;
+  backgroundColor: ${theme.colors.background};
+`;
 
-const Text = styled.Text`
-  font-size: 18px;
-  color: red;
-  font-weight: 600;
+const AddGoal = styled.Button`
+  backgroundColor: ${theme.colors.background};
+  color: ${theme.colors.onSurface};
+  fontSize: 30px;
+  margin: auto;
 `;

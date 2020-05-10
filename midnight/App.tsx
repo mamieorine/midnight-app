@@ -2,13 +2,16 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native'; 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
+import AddGoalScreen from './src/screens/AddGoalScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import DashboardScreen from './src/screens/DashboardScreen';
 import Header from './src/components/Header';
 import firebase from 'firebase';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { theme } from './src/components/theme';
+import { createStackNavigator } from '@react-navigation/stack';
 
+const Stack = createStackNavigator();
 type IconState = {
   active: string;
   Inactive: string;
@@ -42,7 +45,6 @@ const firebaseConfig = {
 
 export default class midnightApp extends React.Component {
   render() {
-    //initailize firebase
     if (!firebase.apps.length) {
       firebase.initializeApp(firebaseConfig);
     }
@@ -73,7 +75,14 @@ export default class midnightApp extends React.Component {
               }
             })}>
 
-            <Tab.Screen name="Home" component={HomeScreen} options={{ title: 'HOME' }} />
+            <Tab.Screen name="Home" >
+              {() => (
+                <Stack.Navigator>
+                  <Stack.Screen name="Overview" component={HomeScreen} options={{ title: 'HOME' }} />
+                  <Stack.Screen name="AddGoalScreen" component={AddGoalScreen} />
+                </Stack.Navigator>
+              )}
+            </Tab.Screen>
             <Tab.Screen name="Dashboard" component={DashboardScreen} />
             {/* Home */}
             {/* Add */}

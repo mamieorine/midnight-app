@@ -28,5 +28,6 @@ export const theme: Theme = {
     accent: '#324755',
     background: '#f2f2f2',
     onBackground: '#FFFFFF',
+    dark: '#262626'
   },
 };
